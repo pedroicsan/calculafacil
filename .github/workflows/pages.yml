@@ -1,0 +1,192 @@
+name: Publish CalculaFácil
+
+
+
+on:
+
+  push:
+  
+    branches: [main]
+    
+  workflow_dispatch:
+  
+
+
+permissions:
+
+  contents: read
+  
+
+
+concurrency:
+
+  group: github-pages
+  
+  cancel-in-progress: true
+  
+
+
+jobs:
+
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    permissions:
+    
+      contents: read
+      
+      pages: write
+      
+    steps:
+    
+      - name: Check out repository
+      
+        uses: actions/checkout@v6
+        
+
+
+      - name: Configure GitHub Pages
+      
+        uses: actions/configure-pages@v5
+        
+
+
+      - name: Extract portable source archive
+      
+        run: unzip -q CalculaFacil-portal-fonte.zip -d source
+        
+
+
+      - name: Run calculator and static-output tests
+      
+        working-directory: source/calculafacil
+        
+        run: |
+        
+          node --test tests/calculators.test.mjs
+          
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+          
+
+
+      - name: Build the static site for this repository
+      
+        working-directory: source/calculafacil
+        
+        shell: bash
+        
+        run: |
+        
+          owner="${GITHUB_REPOSITORY%%/*}"
+          
+          repository="${GITHUB_REPOSITORY#*/}"
+          
+          owner_lc="$(printf '%s' "$owner" | tr '[:upper:]' '[:lower:]')"
+          
+          repository_lc="$(printf '%s' "$repository" | tr '[:upper:]' '[:lower:]')"
+          
+          site_origin="https://${owner_lc}.github.io"
+          
+          if [ "$repository_lc" = "${owner_lc}.github.io" ]; then
+          
+            base_path=""
+            
+          else
+          
+            base_path="/${repository}"
+            
+          fi
+          
+          python3 scripts/build_site.py --site-origin "$site_origin" --base-path "$base_path"
+          
+
+
+      - name: Upload GitHub Pages artifact
+      
+        uses: actions/upload-pages-artifact@v4
+        
+        with:
+        
+          path: source/calculafacil/dist
+          
+
+
+  deploy:
+  
+    needs: build
+    
+    runs-on: ubuntu-latest
+    
+    environment:
+    
+      name: github-pages
+      
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    permissions:
+    
+      pages: write
+      
+      id-token: write
+      
+    steps:
+    
+      - name: Deploy to GitHub Pages
+      
+        id: deployment
+        
+        uses: actions/deploy-pages@v4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
