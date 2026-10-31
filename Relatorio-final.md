@@ -137,7 +137,7 @@ Para publicidade, o proprietário precisa fornecer um e-mail real se quiser exib
 
 ## 15. Endereço publicado
 
-O endereço público configurado para o portal é [https://pedroicsan.github.io/calculafacil/](https://pedroicsan.github.io/calculafacil/), servido pelo repositório público [pedroicsan/calculafacil](https://github.com/pedroicsan/calculafacil). O workflow `pages.yml` compila a origem e o caminho-base correspondentes quando há uma atualização na branch principal.
+O endereço público configurado para o portal é [https://pedroicsan.github.io/calculafacil/](https://pedroicsan.github.io/calculafacil/), servido pelo repositório público [pedroicsan/calculafacil](https://github.com/pedroicsan/calculafacil). A atualização do GA4, o relatório e o README foram publicados no commit `e65b193` da branch `main`. O workflow `Publish CalculaFácil #6` concluiu com sucesso a compilação e o deploy.
 
 ## 16. Custos e garantias
 
