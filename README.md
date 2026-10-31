@@ -18,4 +18,4 @@ node --test tests/calculators.test.mjs
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-O repositório é público, portanto o código-fonte também é visível. Não inclua credenciais ou dados privados. Analytics, AdSense e afiliados permanecem desativados até que o proprietário forneça configurações legítimas e conclua as etapas documentadas. Nenhum serviço pago ou domínio foi ativado.
+O repositório é público, portanto o código-fonte também é visível. Não inclua credenciais ou dados privados. O GA4 já está configurado e só carrega após consentimento; a propriedade Search Console foi verificada, mas o painel ainda informa que não conseguiu buscar o sitemap, embora a URL responda HTTP 200. AdSense e afiliados permanecem desativados. Nenhum serviço pago ou domínio foi ativado.

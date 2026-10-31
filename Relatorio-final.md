@@ -114,24 +114,24 @@ Nenhum desses produtos foi criado. Não existe checkout, pagamento, assinatura o
 
 A compilação de produção é configurada para o endereço real `https://pedroicsan.github.io/calculafacil/`, com caminho-base `/calculafacil`. O sitemap lista as URLs públicas canônicas geradas e o robots.txt anuncia o sitemap e permite o rastreamento público. As páginas têm conteúdo no HTML inicial, títulos e descriptions próprios, canonicals coerentes e JSON-LD testável. A página de erro não é incluída como conteúdo indexável, e uma rota inexistente deve responder com HTTP 404.
 
-O sitemap auxilia a descoberta das URLs, mas não garante rastreamento nem inclusão na Pesquisa Google [2]. A compilação local de produção foi validada com 31 URLs absolutas no sitemap, canonicals e diretiva de rastreamento coerentes com a origem e o caminho-base reais; a verificação da propriedade, o envio pelo Search Console e o acompanhamento de indexação dependem da conta do proprietário [7].
+O sitemap auxilia a descoberta das URLs, mas não garante rastreamento nem inclusão na Pesquisa Google [2]. A propriedade de prefixo `https://pedroicsan.github.io/calculafacil/` foi criada e verificada no Search Console por arquivo HTML. O arquivo gerado pelo Google está na raiz pública do site. O painel informa “Não foi possível buscar o sitemap”. Em checagens independentes, a URL do sitemap respondeu HTTP 200 com `application/xml`, e o XML era válido, com 31 URLs, tanto para navegador quanto para user-agent Googlebot; `robots.txt` e os dois arquivos de verificação também responderam HTTP 200. A divergência com o painel permanece sem diagnóstico confirmado. Portanto, este relatório não afirma que o Google concluiu a leitura, rastreou ou indexou as páginas.
 
 ## 13. Testes e validações
 
 Antes da publicação final, os seguintes testes passaram:
 
 - **Node.js:** 6 grupos de teste, incluindo as 18 fórmulas, unidades, conversões, campos opcionais, decimais com vírgula, empates, limites e entradas inválidas.
-- **Python:** 9 testes de geração, cobrindo as 18 calculadoras, 31 rotas, metadados únicos, FAQs, fontes, categorias, páginas institucionais, saída 404 não indexada, privacidade de Analytics/Ads/afiliados, links internos, sitemap, robots, manifesto e cache offline.
-- **Chromium/Playwright:** responsividade em 320/390/1280 px, busca, cálculos de tinta, papel de parede e média ponderada, página de patrocínio, recálculo offline após cache e fluxo de consentimento. A requisição de Analytics foi interceptada localmente no teste; nenhuma chamada real foi enviada.
-- **Lighthouse:** 99 em desempenho e 100 em acessibilidade na última auditoria mobile local; não restaram violações de acessibilidade reportadas.
+- **Python:** 10 testes de geração, cobrindo as 18 calculadoras, 31 rotas, metadados únicos, FAQs, fontes, categorias, páginas institucionais, saída 404 não indexada, consentimento e configuração do GA4, privacidade de Ads/afiliados, links internos, arquivos de verificação, sitemap, robots, manifesto e cache offline.
+- **Chromium/Playwright:** responsividade em 320/390/1280 px, busca, cálculos de tinta, papel de parede e média ponderada, página de patrocínio, recálculo offline após cache e fluxo de consentimento. A recusa persistente não carrega o tag; mudar para aceitar carrega uma única cópia simulada, sem enviar hits reais. O teste confirmou que o GA4 não recebe consulta/hash nem dados digitados nas calculadoras.
+- **Lighthouse:** no build atualizado, a auditoria mobile local marcou 99 em desempenho e 100 em acessibilidade, práticas recomendadas e SEO; não restaram violações de acessibilidade reportadas.
 
 A geração estática usa a biblioteca padrão do Python; a execução das calculadoras não usa pacotes npm. Os testes de saída repetem a geração em diretório temporário com uma origem de teste para validar os caminhos.
 
 ## 14. Pendências do proprietário
 
-Para conectar o Google Search Console, o proprietário precisa adicionar a propriedade de prefixo `https://pedroicsan.github.io/calculafacil/`, obter o token legítimo, configurá-lo em `googleSiteVerification` e concluir a verificação. Depois, pode enviar o sitemap pelo painel [2] [7].
+O Search Console já tem a propriedade de prefixo verificada por arquivo HTML. O sitemap foi enviado, mas o painel mostra “Não foi possível buscar o sitemap”, apesar das respostas HTTP 200 verificadas. O estado deve ser acompanhado após o recrawl; se continuar sem ser buscado, confira o diagnóstico no painel e reenvie o URL completo na propriedade correta. A presença do arquivo não garante indexação [2] [7].
 
-Analytics é opcional. Se desejado, o proprietário precisa criar a propriedade GA4, informar um ID real em `googleAnalyticsId`, revisar a Política de Privacidade e então habilitar o recurso. O script somente carrega depois de consentimento afirmativo do visitante; recusar não o carrega.
+A propriedade GA4 **CalculaFácil** e o fluxo Web **CalculaFácil — site público** foram criados; o ID de medição é `G-47YHEZD21Z`. O fluxo usa fuso de São Paulo e BRL, com métricas otimizadas desligadas. A tag foi configurada no site para carregar somente após consentimento afirmativo, e os parâmetros de consulta e fragmentos são removidos das URLs enviadas. O Google informou que os primeiros dados podem levar até 48 horas; nenhuma visita de teste foi enviada à propriedade [8] [9].
 
 Para publicidade, o proprietário precisa fornecer um e-mail real se quiser exibi-lo; obter aprovação AdSense e IDs legítimos; confirmar os slots e avisos necessários; ou aderir a programas de afiliados e fornecer os URLs autorizados. O domínio próprio é opcional e exige compra e configuração de DNS; o endereço gratuito `github.io` não depende disso.
 
@@ -154,3 +154,5 @@ As melhorias técnicas e editoriais foram implementadas para facilitar compreens
 [5]: https://developers.google.com/search/docs/appearance/core-web-vitals "Google Search Central — Core Web Vitals"
 [6]: https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links "Google Search Central — qualificar links externos"
 [7]: https://support.google.com/webmasters/answer/9008080?hl=pt-BR "Google Search Console — verificar a propriedade do site"
+[8]: https://support.google.com/analytics/answer/9304153?hl=pt-br "Google Analytics Help — configurar coleta de dados"
+[9]: https://support.google.com/analytics/answer/12270356?hl=pt-br "Google Analytics Help — localizar o ID de medição"
